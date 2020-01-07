@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysGroupMapper">
+
+    <insert id="insertSysGroup" parameterType="com.example.demo.dto.SysGroupDto" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into sys_group (parent_id, `name`, create_time, description) values (#{parentId}, #{name}, #{createTime}, #{description})
+    </insert>
+
+    <delete id="deleteSysGroupById">
+        delete from sys_group where id = #{id}
+    </delete>
+
+    <update id="updateSysGroupById" parameterType="com.example.demo.dto.SysGroupDto">
+        update sys_group set parent_id = #{parentId}, `name` = #{name}, create_time = #{createTime}, description = #{description} where id = #{id}
+    </update>
+
+    <select id="selectSysGroupById" resultType="com.example.demo.dto.SysGroupDto">
+        select * from sys_group where id = #{id}
+    </select>
+
+    <select id="selectSysGroup" resultType="com.example.demo.dto.SysGroupDto">
+        select * from sys_group
+    </select>
+
+</mapper>

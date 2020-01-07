@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysAuthorityMapper">
+
+    <insert id="insertSysAuthority" parameterType="com.example.demo.dto.SysAuthorityDto" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into sys_authority (parent_id, `name`, description) values (#{parentId}, #{name}, #{description})
+    </insert>
+
+    <delete id="deleteSysAuthorityById">
+        delete from sys_authority where id = #{id}
+    </delete>
+
+    <update id="updateSysAuthorityById" parameterType="com.example.demo.dto.SysAuthorityDto">
+        update sys_authority set parent_id = #{parentId}, `name` = #{name}, description = #{description} where id = #{id}
+    </update>
+
+    <select id="selectSysAuthorityById" resultType="com.example.demo.dto.SysAuthorityDto">
+        select * from sys_authority where id = #{id}
+    </select>
+
+    <select id="selectSysAuthority" resultType="com.example.demo.dto.SysAuthorityDto">
+        select * from sys_authority
+    </select>
+
+</mapper>

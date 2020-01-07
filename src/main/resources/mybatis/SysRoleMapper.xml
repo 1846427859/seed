@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysRoleMapper">
+
+    <insert id="insertSysRole" parameterType="com.example.demo.dto.SysRoleDto" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into sys_role (parent_id, `name`, create_time, description) values (#{parentId}, #{name}, #{createTime}, #{description})
+    </insert>
+
+    <delete id="deleteSysRoleById">
+        delete from sys_role where id = #{id}
+    </delete>
+
+    <update id="updateSysRoleById" parameterType="com.example.demo.dto.SysRoleDto">
+        update sys_role set parent_id = #{parentId}, `name` = #{name}, create_time = #{createTime}, description = #{description} where id = #{id}
+    </update>
+
+    <select id="selectSysRoleById" resultType="com.example.demo.dto.SysRoleDto">
+        select * from sys_role where id = #{id}
+    </select>
+
+    <select id="selectSysRole" resultType="com.example.demo.dto.SysRoleDto">
+        select * from sys_role
+    </select>
+
+</mapper>
