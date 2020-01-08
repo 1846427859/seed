@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.SysAccountMapper">
+
+    <insert id="insertSysAccount" parameterType="com.example.demo.dto.SysAccountDto" keyProperty="id" keyColumn="id" useGeneratedKeys="true">
+        insert into sys_account (account, password, phone, email, state) values (#{account}, #{password}, #{phone}, #{email}, #{state})
+    </insert>
+
+    <delete id="deleteSysAccountById">
+        delete from sys_account where id = #{id}
+    </delete>
+
+    <update id="updateSysAccountById" parameterType="com.example.demo.dto.SysAccountDto">
+        update sys_account set account = #{account}, `password` = #{password}, phone = #{phone}, email = #{email}, email = #{email} where id = #{id}
+    </update>
+
+    <select id="selectSysAccountById" resultType="com.example.demo.dto.SysAccountDto">
+        select * from sys_account where id = #{id}
+    </select>
+
+    <select id="selectSysAccount" resultType="com.example.demo.dto.SysAccountDto">
+        select * from sys_account
+    </select>
+
+</mapper>

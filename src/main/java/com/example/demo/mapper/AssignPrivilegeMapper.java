@@ -19,4 +19,14 @@ public interface AssignPrivilegeMapper {
     int insertSysAccountGroup(@Param("accountId") int accountId, @Param("groupId") int groupId);
 
     int deleteSysRoleAuthority(@Param("roleId") int roleId, @Param("authorityId") int authorityId);
+
+    int deleteSysGroupAuthority(@Param("groupId") int groupId, @Param("authorityId") int authorityId);
+
+    int deleteSysAccountAuthority(@Param("accountId") int accountId, @Param("authorityId") int authorityId);
+
+    int deleteSysGroupRole(@Param("groupId") int groupId, @Param("roleId") int roleId);
+
+    int deleteSysAccountRole(@Param("accountId") int accountId, @Param("roleId") int roleId);
+
+    int deleteSysAccountGroup(@Param("accountId") int accountId, @Param("groupId") int groupId);
 }

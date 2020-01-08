@@ -16,4 +16,13 @@ public interface AssignPrivilegeService {
 
     void recoveryAuthorityFromRole(int roleId, int[] authorityIds);
 
+    void recoveryAuthorityFromGroup(int groupId, int[] authorityIds);
+
+    void recoveryAuthorityFromAccount(int accountId, int[] authorityIds);
+
+    void recoveryRoleFromGroup(int groupId, int[] roleIds);
+
+    void recoveryRoleFromAccount(int accountId, int[] roleIds);
+
+    void recoveryGroupFromAccount(int accountId, int[] groupIds);
 }

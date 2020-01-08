@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>账号列表</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        {{accounts}}
+        <table>
+            <tr>
+                <td>序号</td>
+                <td>账号</td>
+                <td>密码</td>
+                <td>手机</td>
+                <td>邮箱</td>
+                <td>状态</td>
+            </tr>
+            <tr v-for="(account,i) in accounts">
+                <td>{{account.i}}</td>
+                <td>{{account.account}}</td>
+                <td>{{account.password}}</td>
+                <td>{{account.phone}}</td>
+                <td>{{account.email}}</td>
+                <td>{{account.state}}</td>
+            </tr>
+        </table>
+        <p v-for="(a,i) in aaa">{{a}}</p>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            mounted: function () {
+                // axios.get('/selectSysAccount').then(function (response) {
+                //     console.log(this.aaa)
+                // }).catch(function (error) {
+                //     console.log(error);
+                // });
+                console.log(this.aaa)
+            },
+            data: {
+                accounts: [],
+                aaa: [1, 2, 3]
+            }
+        })
+    </script>
+</body>
+</html>

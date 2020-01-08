@@ -20,13 +20,13 @@ public class SysRoleController {
     @ResponseBody
     @RequestMapping(value = "/insertSysRole", method = RequestMethod.POST)
     public SysRoleDto insertSysRole(SysRoleDto sysRole) {
-        SysRoleDto groupDto = new SysRoleDto();
-        groupDto.setParentId(0);
-        groupDto.setName("test1");
-        groupDto.setCreateTime(new Date());
-        groupDto.setDescription("test1");
-        int row = roleService.insertSysRole(groupDto);
-        return groupDto;
+        SysRoleDto roleDto = new SysRoleDto();
+        roleDto.setParentId(0);
+        roleDto.setName("test1");
+        roleDto.setCreateTime(new Date());
+        roleDto.setDescription("test1");
+        int row = roleService.insertSysRole(roleDto);
+        return roleDto;
     }
 
     @ResponseBody
@@ -42,21 +42,21 @@ public class SysRoleController {
     @ResponseBody
     @RequestMapping(value = "/updateSysRoleById", method = RequestMethod.POST)
     public SysRoleDto updateSysRoleById(SysRoleDto sysRole) {
-        SysRoleDto groupDto = new SysRoleDto();
-        groupDto.setId(1);
-        groupDto.setParentId(0);
-        groupDto.setCreateTime(new Date());
-        groupDto.setName("test2");
-        groupDto.setDescription("test2");
-        int row = roleService.updateSysRoleById(groupDto);
-        return groupDto;
+        SysRoleDto roleDto = new SysRoleDto();
+        roleDto.setId(1);
+        roleDto.setParentId(0);
+        roleDto.setCreateTime(new Date());
+        roleDto.setName("test2");
+        roleDto.setDescription("test2");
+        int row = roleService.updateSysRoleById(roleDto);
+        return roleDto;
     }
 
     @ResponseBody
     @RequestMapping(value = "/selectSysRoleById", method = RequestMethod.GET)
     public SysRoleDto selectSysRoleById(int id) {
-        SysRoleDto groupDto = roleService.selectSysRoleById(id);
-        return groupDto;
+        SysRoleDto roleDto = roleService.selectSysRoleById(id);
+        return roleDto;
     }
 
     @ResponseBody

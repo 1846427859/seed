@@ -30,4 +30,24 @@
         delete from sys_role_authority where role_id = #{roleId} and authority_id = #{authorityId}
     </delete>
 
+    <delete id="deleteSysGroupAuthority">
+        delete from sys_group_authority where group_id = #{groupId} and authority_id = #{authorityId}
+    </delete>
+
+    <delete id="deleteSysAccountAuthority">
+        delete from sys_account_authority where account_id = #{accountId} and authority_id = #{authorityId}
+    </delete>
+
+    <delete id="deleteSysGroupRole">
+        delete from sys_group_role where group_id = #{groupId} and role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteSysAccountRole">
+        delete from sys_account_role where account_id = #{accountId} and role_id = #{roleId}
+    </delete>
+
+    <delete id="deleteSysAccountGroup">
+        delete from sys_account_group where account_id = #{accountId} and group_id = #{groupId}
+    </delete>
+
 </mapper>

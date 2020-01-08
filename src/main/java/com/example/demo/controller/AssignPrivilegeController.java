@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.mapper.AssignPrivilegeMapper;
 import com.example.demo.service.AssignPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -84,6 +83,77 @@ public class AssignPrivilegeController {
 
     }
 
+    @ResponseBody
+    @RequestMapping(value = "/recoveryAuthorityFromGroup", method = RequestMethod.POST)
+    public void recoveryAuthorityFromGroup(int groupId, int[] authorityIds) {
+        System.out.println(groupId);
+        System.out.println(Arrays.toString(authorityIds));
+        assignPrivilegeService.recoveryAuthorityFromGroup(groupId, authorityIds);
+    }
 
+    @ResponseBody
+    @RequestMapping(value = "/recoveryAuthorityFromAccount", method = RequestMethod.POST)
+    public void recoveryAuthorityFromAccount(int accountId, int[] authorityIds) {
+        System.out.println(accountId);
+        System.out.println(Arrays.toString(authorityIds));
+        assignPrivilegeService.recoveryAuthorityFromAccount(accountId, authorityIds);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/recoveryRoleFromGroup", method = RequestMethod.POST)
+    public void recoveryRoleFromGroup(int groupId, int[] roleIds) {
+        System.out.println(groupId);
+        System.out.println(Arrays.toString(roleIds));
+        assignPrivilegeService.recoveryRoleFromGroup(groupId, roleIds);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/recoveryRoleFromAccount", method = RequestMethod.POST)
+    public void recoveryRoleFromAccount(int accountId, int[] roleIds) {
+        System.out.println(accountId);
+        System.out.println(Arrays.toString(roleIds));
+        assignPrivilegeService.recoveryRoleFromAccount(accountId, roleIds);
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/recoveryGroupFromAccount", method = RequestMethod.POST)
+    public void recoveryGroupFromAccount(int accountId, int[] groupIds) {
+        System.out.println(accountId);
+        System.out.println(Arrays.toString(groupIds));
+        assignPrivilegeService.recoveryGroupFromAccount(accountId, groupIds);
+    }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

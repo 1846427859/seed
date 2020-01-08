@@ -88,4 +88,68 @@ public class AssignPrivilegeServiceImpl implements AssignPrivilegeService {
 
     }
 
+    @Override
+    public void recoveryAuthorityFromGroup(int groupId, int[] authorityIds) {
+        for (int i = 0; i < authorityIds.length; i++) {
+            int authorityId = authorityIds[i];
+            int row = assignPrivilegeMapper.deleteSysGroupAuthority(groupId, authorityId);
+        }
+    }
+
+    @Override
+    public void recoveryAuthorityFromAccount(int accountId, int[] authorityIds) {
+        for (int i = 0; i < authorityIds.length; i++) {
+            int authorityId = authorityIds[i];
+            int row = assignPrivilegeMapper.deleteSysAccountAuthority(accountId, authorityId);
+        }
+    }
+
+    @Override
+    public void recoveryRoleFromGroup(int groupId, int[] roleIds) {
+        for (int i = 0; i < roleIds.length; i++) {
+            int roleId = roleIds[i];
+            int row = assignPrivilegeMapper.deleteSysGroupRole(groupId, roleId);
+        }
+    }
+
+    @Override
+    public void recoveryRoleFromAccount(int accountId, int[] roleIds) {
+        for (int i = 0; i < roleIds.length; i++) {
+            int roleId = roleIds[i];
+            int row = assignPrivilegeMapper.deleteSysAccountRole(accountId, roleId);
+        }
+    }
+
+    @Override
+    public void recoveryGroupFromAccount(int accountId, int[] groupIds) {
+        for (int i = 0; i < groupIds.length; i++) {
+            int groupId = groupIds[i];
+            int row = assignPrivilegeMapper.deleteSysAccountGroup(accountId, groupId);
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
