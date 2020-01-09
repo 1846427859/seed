@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>账号列表</title>
@@ -8,8 +8,8 @@
 </head>
 <body>
     <div id="app">
-        {{accounts}}
-        <table>
+        <a href="account_add.html">增加账号</a>
+        <table border="1">
             <tr>
                 <td>序号</td>
                 <td>账号</td>
@@ -17,33 +17,60 @@
                 <td>手机</td>
                 <td>邮箱</td>
                 <td>状态</td>
+                <td>操作</td>
             </tr>
-            <tr v-for="(account,i) in accounts">
-                <td>{{account.i}}</td>
+            <tr v-if="accounts.length < 1">
+                <td colspan="7" align="center">没有数据</td>
+            </tr>
+            <tr v-for="(account,index) in accounts">
+                <td>{{index + 1}}</td>
                 <td>{{account.account}}</td>
                 <td>{{account.password}}</td>
                 <td>{{account.phone}}</td>
                 <td>{{account.email}}</td>
                 <td>{{account.state}}</td>
+                <td>
+                    <a href="">修改</a>
+                    <a href="" v-on:click.stop.prevent="deleteSysAccountById(account.id)">删除</a>
+                </td>
             </tr>
         </table>
-        <p v-for="(a,i) in aaa">{{a}}</p>
     </div>
 
     <script>
         var app = new Vue({
             el: '#app',
             mounted: function () {
-                // axios.get('/selectSysAccount').then(function (response) {
-                //     console.log(this.aaa)
-                // }).catch(function (error) {
-                //     console.log(error);
-                // });
-                console.log(this.aaa)
+                var _this = this
+                axios.get('/selectSysAccount').then(function (response) {
+                    _this.accounts = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
             },
             data: {
-                accounts: [],
-                aaa: [1, 2, 3]
+                accounts: []
+            },
+            methods: {
+                insertSysAccount: function() {
+
+                },
+                deleteSysAccountById: function (id) {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('id', id)
+                    axios.post('/deleteSysAccountById', params).then(function (response) {
+                        _this.selectSysAccount()
+                    })
+                },
+                selectSysAccount: function () {
+                    var _this = this
+                    axios.get('/selectSysAccount').then(function (response) {
+                        _this.accounts = response.data
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
             }
         })
     </script>
