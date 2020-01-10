@@ -20,14 +20,8 @@ public class SysAccountController {
     @ResponseBody
     @RequestMapping(value = "/insertSysAccount", method = RequestMethod.POST)
     public SysAccountDto insertSysAccount(SysAccountDto sysAccount) {
-        SysAccountDto accountDto = new SysAccountDto();
-        accountDto.setAccount("test1");
-        accountDto.setPassword("test1");
-        accountDto.setPhone("12345678");
-        accountDto.setEmail("123@qq.com");
-        accountDto.setState(1);
-        int row = accountService.insertSysAccount(accountDto);
-        return accountDto;
+        int row = accountService.insertSysAccount(sysAccount);
+        return sysAccount;
     }
 
     @ResponseBody
@@ -43,14 +37,8 @@ public class SysAccountController {
     @ResponseBody
     @RequestMapping(value = "/updateSysAccountById", method = RequestMethod.POST)
     public SysAccountDto updateSysAccountById(SysAccountDto sysAccount) {
-        SysAccountDto accountDto = new SysAccountDto();
-        accountDto.setAccount("test2");
-        accountDto.setPassword("test2");
-        accountDto.setPhone("12345678");
-        accountDto.setEmail("123@qq.com");
-        accountDto.setState(1);
-        int row = accountService.updateSysAccountById(accountDto);
-        return accountDto;
+        int row = accountService.updateSysAccountById(sysAccount);
+        return sysAccount;
     }
 
     @ResponseBody

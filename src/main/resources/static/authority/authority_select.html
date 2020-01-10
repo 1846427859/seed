@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>账号列表</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <a href="authority_insert.html">增加账号</a>
+        <table border="1">
+            <tr>
+                <td>序号</td>
+                <td>ID</td>
+                <td>父级ID</td>
+                <td>名称</td>
+                <td>描述</td>
+                <td>操作</td>
+            </tr>
+            <tr v-if="authoritys.length < 1">
+                <td colspan="7" align="center">没有数据</td>
+            </tr>
+            <tr v-for="(authority,index) in authoritys">
+                <td>{{index + 1}}</td>
+                <td>{{authority.id}}</td>
+                <td>{{authority.parentId}}</td>
+                <td>{{authority.name}}</td>
+                <td>{{authority.description}}</td>
+                <td>
+                    <a v-bind:href="'authority_update.html?id=' + authority.id">修改</a>
+                    <a href="" v-on:click.stop.prevent="deleteSysAuthorityById(authority.id)">删除</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <script>
+        var app = new Vue({
+            el: '#app',
+            mounted: function () {
+                var _this = this
+                axios.get('/selectSysAuthority').then(function (response) {
+                    _this.authoritys = response.data
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            data: {
+                authoritys: []
+            },
+            methods: {
+                insertSysAuthority: function() {
+
+                },
+                deleteSysAuthorityById: function (id) {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('id', id)
+                    axios.post('/deleteSysAuthorityById', params).then(function (response) {
+                        _this.selectSysAuthority()
+                    })
+                },
+                selectSysAuthority: function () {
+                    var _this = this
+                    axios.get('/selectSysAuthority').then(function (response) {
+                        _this.authoritys = response.data
+                    }).catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+        })
+    </script>
+</body>
+</html>

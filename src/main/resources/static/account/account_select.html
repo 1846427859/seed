@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>账号列表</title>
@@ -8,7 +8,7 @@
 </head>
 <body>
     <div id="app">
-        <a href="account_add.html">增加账号</a>
+        <a href="account_insert.html">增加账号</a>
         <table border="1">
             <tr>
                 <td>序号</td>
@@ -30,7 +30,7 @@
                 <td>{{account.email}}</td>
                 <td>{{account.state}}</td>
                 <td>
-                    <a href="">修改</a>
+                    <a v-bind:href="'account_update.html?id=' + account.id">修改</a>
                     <a href="" v-on:click.stop.prevent="deleteSysAccountById(account.id)">删除</a>
                 </td>
             </tr>

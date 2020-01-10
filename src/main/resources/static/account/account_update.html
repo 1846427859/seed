@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>修改账号</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <form id="app" v-on:submit.stop.prevent>
+        账号：<input type="text" v-model="account"><br>
+        密码：<input type="password" v-model="password"><br>
+        手机：<input type="text" v-model="phone"><br>
+        邮箱：<input type="text" v-model="email"><br>
+        <input type="hidden" v-model="state" value="1">
+        <input type="submit" value="提交" v-on:click.stop.prevent="updateSysAccountById()">
+    </form>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                account: '',
+                password: '',
+                phone: '',
+                email: '',
+                state: '1'
+            },
+            created: function() {
+                var _this = this
+                _this.id = getQueryString('id')
+                axios.get('/selectSysAccountById?id=' + _this.id).then(function (response) {
+                    _this.account = response.data.account
+                    _this.password = response.data.password
+                    _this.phone = response.data.phone
+                    _this.email = response.data.email
+                    _this.state = response.data.state
+                })
+            },
+            methods: {
+                updateSysAccountById: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('id', _this.id)
+                    params.append('account', _this.account)
+                    params.append('password', _this.password)
+                    params.append('phone', _this.phone)
+                    params.append('email', _this.email)
+                    params.append('state', _this.state)
+                    axios.post('/updateSysAccountById', params).then(function (response) {
+                        location.href = "/account/account_select.html"
+                    })
+                }
+            }
+        })
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(decodeURIComponent(r[2]));
+            return null;
+        }
+    </script>
+</body>
+</html>
