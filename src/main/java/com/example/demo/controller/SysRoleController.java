@@ -20,13 +20,9 @@ public class SysRoleController {
     @ResponseBody
     @RequestMapping(value = "/insertSysRole", method = RequestMethod.POST)
     public SysRoleDto insertSysRole(SysRoleDto sysRole) {
-        SysRoleDto roleDto = new SysRoleDto();
-        roleDto.setParentId(0);
-        roleDto.setName("test1");
-        roleDto.setCreateTime(new Date());
-        roleDto.setDescription("test1");
-        int row = roleService.insertSysRole(roleDto);
-        return roleDto;
+        sysRole.setCreateTime(new Date());
+        int row = roleService.insertSysRole(sysRole);
+        return sysRole;
     }
 
     @ResponseBody
@@ -42,14 +38,8 @@ public class SysRoleController {
     @ResponseBody
     @RequestMapping(value = "/updateSysRoleById", method = RequestMethod.POST)
     public SysRoleDto updateSysRoleById(SysRoleDto sysRole) {
-        SysRoleDto roleDto = new SysRoleDto();
-        roleDto.setId(1);
-        roleDto.setParentId(0);
-        roleDto.setCreateTime(new Date());
-        roleDto.setName("test2");
-        roleDto.setDescription("test2");
-        int row = roleService.updateSysRoleById(roleDto);
-        return roleDto;
+        int row = roleService.updateSysRoleById(sysRole);
+        return sysRole;
     }
 
     @ResponseBody

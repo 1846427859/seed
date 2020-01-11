@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>增加角色</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <form id="app" v-on:submit.stop.prevent>
+        父级角色：
+        <select v-model="parentId">
+            <option value="0">--无父级--</option>
+            <option v-for="(role, index) in roles" v-bind:value="role.id">{{role.name}}</option>
+        </select>
+        <br>
+        角色名称：<input type="text" v-model="name"><br>
+        角色描述：<input type="text" v-model="description"><br>
+        <input type="submit" value="提交" v-on:click.stop.prevent="insertSysRole()">
+    </form>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                parentId: '0',
+                name: '',
+                description: '',
+                roles: []
+            },
+            created: function() {
+                var _this = this
+                axios.get('/selectSysRole').then(function (response) {
+                    _this.roles = response.data
+                })
+            },
+            methods: {
+                insertSysRole: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('parentId', _this.parentId)
+                    params.append('name', _this.name)
+                    params.append('description', _this.description)
+                    axios.post('/insertSysRole', params).then(function (response) {
+                        location.href = "/role/role_select.html"
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

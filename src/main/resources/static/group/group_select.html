@@ -2,34 +2,36 @@
 <html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
-    <title>账号列表</title>
+    <title>权限组列表</title>
     <script src="https://unpkg.com/vue/dist/vue.js"></script>
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <div id="app">
-        <a href="authority_insert.html">增加权限</a>
+        <a href="group_insert.html">增加权限组</a>
         <table border="1">
             <tr>
                 <td>序号</td>
                 <td>ID</td>
                 <td>父级ID</td>
                 <td>名称</td>
+                <td>创建时间</td>
                 <td>描述</td>
                 <td>操作</td>
             </tr>
-            <tr v-if="authoritys.length < 1">
+            <tr v-if="groups.length < 1">
                 <td colspan="7" align="center">没有数据</td>
             </tr>
-            <tr v-for="(authority,index) in authoritys">
+            <tr v-for="(group,index) in groups">
                 <td>{{index + 1}}</td>
-                <td>{{authority.id}}</td>
-                <td>{{authority.parentId}}</td>
-                <td>{{authority.name}}</td>
-                <td>{{authority.description}}</td>
+                <td>{{group.id}}</td>
+                <td>{{group.parentId}}</td>
+                <td>{{group.name}}</td>
+                <td>{{group.createTime}}</td>
+                <td>{{group.description}}</td>
                 <td>
-                    <a v-bind:href="'authority_update.html?id=' + authority.id">修改</a>
-                    <a href="" v-on:click.stop.prevent="deleteSysAuthorityById(authority.id)">删除</a>
+                    <a v-bind:href="'group_update.html?id=' + group.id">修改</a>
+                    <a href="" v-on:click.stop.prevent="deleteSysGroupById(group.id)">删除</a>
                 </td>
             </tr>
         </table>
@@ -40,31 +42,31 @@
             el: '#app',
             mounted: function () {
                 var _this = this
-                axios.get('/selectSysAuthority').then(function (response) {
-                    _this.authoritys = response.data
+                axios.get('/selectSysGroup').then(function (response) {
+                    _this.groups = response.data
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
             data: {
-                authoritys: []
+                groups: []
             },
             methods: {
-                insertSysAuthority: function() {
+                insertSysGroup: function() {
 
                 },
-                deleteSysAuthorityById: function (id) {
+                deleteSysGroupById: function (id) {
                     var _this = this
                     var params =  new FormData()
                     params.append('id', id)
-                    axios.post('/deleteSysAuthorityById', params).then(function (response) {
-                        _this.selectSysAuthority()
+                    axios.post('/deleteSysGroupById', params).then(function (response) {
+                        _this.selectSysGroup()
                     })
                 },
-                selectSysAuthority: function () {
+                selectSysGroup: function () {
                     var _this = this
-                    axios.get('/selectSysAuthority').then(function (response) {
-                        _this.authoritys = response.data
+                    axios.get('/selectSysGroup').then(function (response) {
+                        _this.groups = response.data
                     }).catch(function (error) {
                         console.log(error);
                     });

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>修改账号</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <form id="app" v-on:submit.stop.prevent>
+        父级权限：
+        <select v-model="parentId">
+            <option value="0">--无父级--</option>
+            <option v-for="(authority, index) in authorities" v-bind:value="authority.id">{{authority.name}}</option>
+        </select>
+        <br>
+        权限名称：<input type="text" v-model="name"><br>
+        权限描述：<input type="text" v-model="description"><br>
+        <input type="submit" value="提交" v-on:click.stop.prevent="updateSysAuthorityById()">
+    </form>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                id: '',
+                parentId: '0',
+                name: '',
+                description: '',
+                authorities: []
+            },
+            created: function() {
+                var _this = this
+                axios.get('/selectSysAuthority').then(function (response) {
+                    _this.authorities = response.data
+                })
+                _this.id = getQueryString('id')
+                axios.get('/selectSysAuthorityById?id=' + _this.id).then(function (response) {
+                    _this.parentId = response.data.parentId
+                    _this.name = response.data.name
+                    _this.description = response.data.description
+                })
+            },
+            methods: {
+                updateSysAuthorityById: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('id', _this.id)
+                    params.append('parentId', _this.parentId)
+                    params.append('name', _this.name)
+                    params.append('description', _this.description)
+                    axios.post('/updateSysAuthorityById', params).then(function (response) {
+                        location.href = "/authority/authority_select.html"
+                    })
+                }
+            }
+        })
+        function getQueryString(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+            var r = window.location.search.substr(1).match(reg);
+            if (r != null) return unescape(decodeURIComponent(r[2]));
+            return null;
+        }
+    </script>
+</body>
+</html>

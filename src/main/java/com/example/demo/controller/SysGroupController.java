@@ -19,14 +19,10 @@ public class SysGroupController {
 
     @ResponseBody
     @RequestMapping(value = "/insertSysGroup", method = RequestMethod.POST)
-    public SysGroupDto insertSysGroup(SysGroupDto sysAuthority) {
-        SysGroupDto groupDto = new SysGroupDto();
-        groupDto.setParentId(0);
-        groupDto.setName("test1");
-        groupDto.setCreateTime(new Date());
-        groupDto.setDescription("test1");
-        int row = groupService.insertSysGroup(groupDto);
-        return groupDto;
+    public SysGroupDto insertSysGroup(SysGroupDto sysGroup) {
+        sysGroup.setCreateTime(new Date());
+        int row = groupService.insertSysGroup(sysGroup);
+        return sysGroup;
     }
 
     @ResponseBody
@@ -41,15 +37,9 @@ public class SysGroupController {
 
     @ResponseBody
     @RequestMapping(value = "/updateSysGroupById", method = RequestMethod.POST)
-    public SysGroupDto updateSysGroupById(SysGroupDto sysAuthority) {
-        SysGroupDto groupDto = new SysGroupDto();
-        groupDto.setId(1);
-        groupDto.setParentId(0);
-        groupDto.setCreateTime(new Date());
-        groupDto.setName("test2");
-        groupDto.setDescription("test2");
-        int row = groupService.updateSysGroupById(groupDto);
-        return groupDto;
+    public SysGroupDto updateSysGroupById(SysGroupDto sysGroup) {
+        int row = groupService.updateSysGroupById(sysGroup);
+        return sysGroup;
     }
 
     @ResponseBody

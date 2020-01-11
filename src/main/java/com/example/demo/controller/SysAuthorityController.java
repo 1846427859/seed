@@ -20,12 +20,8 @@ public class SysAuthorityController {
     @ResponseBody
     @RequestMapping(value = "/insertSysAuthority", method = RequestMethod.POST)
     public SysAuthorityDto insertSysAuthority(SysAuthorityDto sysAuthority) {
-        SysAuthorityDto authorityDto = new SysAuthorityDto();
-        authorityDto.setParentId(0);
-        authorityDto.setName("test1");
-        authorityDto.setDescription("test1");
-        int row = authorityService.insertSysAuthority(authorityDto);
-        return authorityDto;
+        int row = authorityService.insertSysAuthority(sysAuthority);
+        return sysAuthority;
     }
 
     @ResponseBody
@@ -41,13 +37,8 @@ public class SysAuthorityController {
     @ResponseBody
     @RequestMapping(value = "/updateSysAuthorityById", method = RequestMethod.POST)
     public SysAuthorityDto updateSysAuthorityById(SysAuthorityDto sysAuthority) {
-        SysAuthorityDto authorityDto = new SysAuthorityDto();
-        authorityDto.setId(2);
-        authorityDto.setParentId(0);
-        authorityDto.setName("test2");
-        authorityDto.setDescription("test2");
-        int row = authorityService.updateSysAuthorityById(authorityDto);
-        return authorityDto;
+        int row = authorityService.updateSysAuthorityById(sysAuthority);
+        return sysAuthority;
     }
 
     @ResponseBody
