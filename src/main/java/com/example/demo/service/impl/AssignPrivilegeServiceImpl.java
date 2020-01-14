@@ -1,10 +1,15 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.dto.SysAuthorityDto;
+import com.example.demo.dto.SysGroupDto;
+import com.example.demo.dto.SysRoleDto;
 import com.example.demo.mapper.AssignPrivilegeMapper;
 import com.example.demo.service.AssignPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -126,6 +131,42 @@ public class AssignPrivilegeServiceImpl implements AssignPrivilegeService {
             int groupId = groupIds[i];
             int row = assignPrivilegeMapper.deleteSysAccountGroup(accountId, groupId);
         }
+    }
+
+    @Override
+    public List<SysAuthorityDto> selectAuthorityFromRole(int roleId) {
+        List<SysAuthorityDto> authorities = assignPrivilegeMapper.selectAuthorityFromRole(roleId);
+        return authorities;
+    }
+
+    @Override
+    public List<SysAuthorityDto> selectAuthorityFromGroup(int groupId) {
+        List<SysAuthorityDto> authorities = assignPrivilegeMapper.selectAuthorityFromGroup(groupId);
+        return authorities;
+    }
+
+    @Override
+    public List<SysAuthorityDto> selectAuthorityFromAccount(int accountId) {
+        List<SysAuthorityDto> authorities = assignPrivilegeMapper.selectAuthorityFromAccount(accountId);
+        return authorities;
+    }
+
+    @Override
+    public List<SysRoleDto> selectRoleFromAccount(int accountId) {
+        List<SysRoleDto> roleDtos = assignPrivilegeMapper.selectRoleFromAccount(accountId);
+        return roleDtos;
+    }
+
+    @Override
+    public List<SysRoleDto> selectRoleFromGroup(int groupId) {
+        List<SysRoleDto> roleDtos = assignPrivilegeMapper.selectRoleFromGroup(groupId);
+        return roleDtos;
+    }
+
+    @Override
+    public List<SysGroupDto> selectGroupFromAccount(int accountId) {
+        List<SysGroupDto> groupDtos = assignPrivilegeMapper.selectGroupFromAccount(accountId);
+        return groupDtos;
     }
 }
 

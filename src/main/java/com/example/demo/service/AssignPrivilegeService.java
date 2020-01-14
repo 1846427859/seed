@@ -1,5 +1,11 @@
 package com.example.demo.service;
 
+import com.example.demo.dto.SysAuthorityDto;
+import com.example.demo.dto.SysGroupDto;
+import com.example.demo.dto.SysRoleDto;
+
+import java.util.List;
+
 public interface AssignPrivilegeService {
 
     void assignAuthorityToRole(int[] authorityIds, int[] roleIds, int type);
@@ -25,4 +31,16 @@ public interface AssignPrivilegeService {
     void recoveryRoleFromAccount(int accountId, int[] roleIds);
 
     void recoveryGroupFromAccount(int accountId, int[] groupIds);
+
+    List<SysAuthorityDto> selectAuthorityFromRole(int roleId);
+
+    List<SysAuthorityDto> selectAuthorityFromGroup(int groupId);
+
+    List<SysAuthorityDto> selectAuthorityFromAccount(int accountId);
+
+    List<SysRoleDto> selectRoleFromAccount(int accountId);
+
+    List<SysRoleDto> selectRoleFromGroup(int groupId);
+
+    List<SysGroupDto> selectGroupFromAccount(int accountId);
 }

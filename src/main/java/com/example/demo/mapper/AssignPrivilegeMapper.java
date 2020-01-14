@@ -1,7 +1,12 @@
 package com.example.demo.mapper;
 
+import com.example.demo.dto.SysAuthorityDto;
+import com.example.demo.dto.SysGroupDto;
+import com.example.demo.dto.SysRoleDto;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 @Mapper
 public interface AssignPrivilegeMapper {
@@ -29,4 +34,16 @@ public interface AssignPrivilegeMapper {
     int deleteSysAccountRole(@Param("accountId") int accountId, @Param("roleId") int roleId);
 
     int deleteSysAccountGroup(@Param("accountId") int accountId, @Param("groupId") int groupId);
+
+    List<SysAuthorityDto> selectAuthorityFromRole(int roleId);
+
+    List<SysAuthorityDto> selectAuthorityFromGroup(int groupId);
+
+    List<SysAuthorityDto> selectAuthorityFromAccount(int accountId);
+
+    List<SysRoleDto> selectRoleFromAccount(int accountId);
+
+    List<SysRoleDto> selectRoleFromGroup(int groupId);
+
+    List<SysGroupDto> selectGroupFromAccount(int accountId);
 }

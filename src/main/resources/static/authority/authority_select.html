@@ -18,10 +18,10 @@
                 <td>描述</td>
                 <td>操作</td>
             </tr>
-            <tr v-if="authoritys.length < 1">
+            <tr v-if="authorities.length < 1">
                 <td colspan="7" align="center">没有数据</td>
             </tr>
-            <tr v-for="(authority,index) in authoritys">
+            <tr v-for="(authority,index) in authorities">
                 <td>{{index + 1}}</td>
                 <td>{{authority.id}}</td>
                 <td>{{authority.parentId}}</td>
@@ -41,13 +41,13 @@
             mounted: function () {
                 var _this = this
                 axios.get('/selectSysAuthority').then(function (response) {
-                    _this.authoritys = response.data
+                    _this.authorities = response.data
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
             data: {
-                authoritys: []
+                authorities: []
             },
             methods: {
                 insertSysAuthority: function() {
@@ -64,7 +64,7 @@
                 selectSysAuthority: function () {
                     var _this = this
                     axios.get('/selectSysAuthority').then(function (response) {
-                        _this.authoritys = response.data
+                        _this.authorities = response.data
                     }).catch(function (error) {
                         console.log(error);
                     });

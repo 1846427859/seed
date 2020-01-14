@@ -22,7 +22,7 @@
         insert into sys_account_role (account_id, role_id) values (#{accountId}, #{roleId})
     </insert>
 
-    <insert id="assignGroupToAccount">
+    <insert id="insertSysAccountGroup">
         insert into sys_account_group (account_id, group_id) values (#{accountId}, #{groupId})
     </insert>
 
@@ -49,5 +49,41 @@
     <delete id="deleteSysAccountGroup">
         delete from sys_account_group where account_id = #{accountId} and group_id = #{groupId}
     </delete>
+
+    <select id="selectAuthorityFromRole" resultType="com.example.demo.dto.SysAuthorityDto">
+        select ra.type, a.* from sys_role_authority ra
+        left join sys_authority a on a.id = ra.authority_id
+        where ra.role_id = #{roleId}
+    </select>
+
+    <select id="selectAuthorityFromGroup" resultType="com.example.demo.dto.SysAuthorityDto">
+        select ga.type, a.* from sys_group_authority ga
+        left join sys_authority a on a.id = ga.authority_id
+        where ga.group_id = #{groupId}
+    </select>
+
+    <select id="selectAuthorityFromAccount" resultType="com.example.demo.dto.SysAuthorityDto">
+        select aa.type, a.* from sys_account_authority aa
+        left join sys_authority a on a.id = aa.authority_id
+        where aa.account_id = #{accountId}
+    </select>
+
+    <select id="selectRoleFromAccount" resultType="com.example.demo.dto.SysRoleDto">
+        select r.* from sys_account_role ar
+        left join sys_role r on r.id = ar.role_id
+        where ar.account_id = #{accountId}
+    </select>
+
+    <select id="selectRoleFromGroup" resultType="com.example.demo.dto.SysRoleDto">
+        select r.* from sys_group_role gr
+        left join sys_role r on r.id = gr.role_id
+        where gr.group_id = #{groupId}
+    </select>
+
+    <select id="selectGroupFromAccount" resultType="com.example.demo.dto.SysGroupDto">
+        select g.* from sys_account_group ag
+        left join sys_group g on g.id = ag.group_id
+        where ag.account_id = #{accountId}
+    </select>
 
 </mapper>

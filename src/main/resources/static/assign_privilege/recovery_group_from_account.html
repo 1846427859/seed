@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>回收账号角色</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <select v-model="accountId" v-on:change="selectGroupFromAccount()">
+            <option value="0">-选择账号-</option>
+            <option v-for="(account, index) in accounts" v-bind:value="account.id">{{account.account}}</option>
+        </select>
+        <br>
+        <div style="height: 200px; overflow: scroll;">
+            <table border="1">
+                <tr>
+                    <td>选择</td>
+                    <td>角色名称</td>
+                    <td>角色描述</td>                   
+                </tr>
+                <tr v-for="(group,index) in groups">
+                    <td><input type="checkbox" v-model="groupIds" v-bind:value="group.id"></td>
+                    <td>{{group.name}}</td>
+                    <td> {{group.description}}</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <input type="button" value="收回选择的权限组" v-on:click="recoveryGroupFromAccount()">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function() {
+                var _this = this
+                axios.get('/selectSysAccount').then(function (response) {
+                    _this.accounts = response.data
+                })
+            },
+            data: {
+                accounts: [],
+                groups: [],
+                accountId: '0',
+                groupIds: []
+            },
+            methods: {
+                recoveryGroupFromAccount: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('accountId', _this.accountId)
+                    params.append('groupIds', _this.groupIds)
+                    axios.post('/recoveryGroupFromAccount', params).then(function (response) {
+                        alert('权限组回收成功')
+                        _this.selectGroupFromAccount()
+                    })
+                },
+                selectGroupFromAccount: function () {
+                    var _this = this
+                    axios.get('/selectGroupFromAccount', {params: {accountId: _this.accountId}}).then(function (response) {
+                        _this.groups = response.data
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>给账号授权</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div style="height: 200px; overflow: scroll;">
+            <table border="1">
+                <tr>
+                    <td>选择</td>
+                    <td>账号名称</td>
+                    <td>手机</td>
+                    <td>邮箱</td>
+                </tr>
+                <tr v-for="(account, index) in accounts">
+                    <td><input type="checkbox" v-model="accountIds" v-bind:value="account.id"></td>
+                    <td>{{account.account}}</td>
+                    <td> {{account.phone}}</td>
+                    <td> {{account.email}}</td>
+                </tr>
+            </table>
+        </div>
+        <div style="height: 200px; overflow: scroll;">
+            <table border="1">
+                <tr>
+                    <td>选择</td>
+                    <td>权限名称</td>
+                    <td>权限描述</td>
+                </tr>
+                <tr v-for="(authority,index) in authorities">
+                    <td><input type="checkbox" v-model="authorityIds" v-bind:value="authority.id"></td>
+                    <td>{{authority.name}}</td>
+                    <td> {{authority.description}}</td>
+                </tr>
+            </table>
+        </div>
+        拥有权限者可以将这些权限授权给别人：<input type="radio" v-model="type" value="0"> 否 <input type="radio"  v-model="type" value="1"> 是
+        <br>
+        <input type="button" value="确认授权" v-on:click="assignAuthorityToAccount()">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function() {
+                var _this = this
+                axios.get('/selectSysAccount').then(function (response) {
+                    _this.accounts = response.data
+                })
+                axios.get('/selectSysAuthority').then(function (response) {
+                    _this.authorities = response.data
+                })
+            },
+            data: {
+                accounts: [],
+                authorities: [],
+                accountIds: [],
+                authorityIds: [],
+                type: '0'
+            },
+            methods: {
+                assignAuthorityToAccount: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('accountIds', _this.accountIds)
+                    params.append('authorityIds', _this.authorityIds)
+                    params.append('type', _this.type)
+                    axios.post('/assignAuthorityToAccount', params).then(function (response) {
+                        alert('授权成功')
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

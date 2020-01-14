@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>给账号授权</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <div style="height: 200px; overflow: scroll;">
+            <table border="1">
+                <tr>
+                    <td>选择</td>
+                    <td>账号名称</td>
+                    <td>手机</td>
+                    <td>邮箱</td>
+                </tr>
+                <tr v-for="(account, index) in accounts">
+                    <td><input type="checkbox" v-model="accountIds" v-bind:value="account.id"></td>
+                    <td>{{account.account}}</td>
+                    <td> {{account.phone}}</td>
+                    <td> {{account.email}}</td>
+                </tr>
+            </table>
+        </div>
+        <div style="height: 200px; overflow: scroll;">
+            <table border="1">
+                <tr>
+                    <td>选择</td>
+                    <td>权限组名称</td>
+                    <td>权限组描述</td>
+                </tr>
+                <tr v-for="(group,index) in groups">
+                    <td><input type="checkbox" v-model="groupIds" v-bind:value="group.id"></td>
+                    <td>{{group.name}}</td>
+                    <td> {{group.description}}</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <input type="button" value="确认授权" v-on:click="assignGroupToAccount()">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function() {
+                var _this = this
+                axios.get('/selectSysAccount').then(function (response) {
+                    _this.accounts = response.data
+                })
+                axios.get('/selectSysGroup').then(function (response) {
+                    _this.groups = response.data
+                })
+            },
+            data: {
+                accounts: [],
+                groups: [],
+                accountIds: [],
+                groupIds: [],
+                type: '0'
+            },
+            methods: {
+                assignGroupToAccount: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('accountIds', _this.accountIds)
+                    params.append('groupIds', _this.groupIds)
+                    params.append('type', _this.type)
+                    axios.post('/assignGroupToAccount', params).then(function (response) {
+                        alert('分配权限组成功')
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>

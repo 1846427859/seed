@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>给账号授权</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <select v-model="accountId" v-on:change="selectAuthorityFromAccount()">
+            <option value="0">-选择账号-</option>
+            <option v-for="(account, index) in accounts" v-bind:value="account.id">{{account.account}}</option>
+        </select>
+        <br>
+        <div style="height: 200px; overflow: scroll;">
+            <table border="1">
+                <tr>
+                    <td>选择</td>
+                    <td>权限名称</td>
+                    <td>权限描述</td>
+                    <td>授权给别人</td>
+                </tr>
+                <tr v-for="(authority,index) in authorities">
+                    <td><input type="checkbox" v-model="authorityIds" v-bind:value="authority.id"></td>
+                    <td>{{authority.name}}</td>
+                    <td> {{authority.description}}</td>
+                    <td> {{authority.type}}</td>
+                </tr>
+            </table>
+        </div>
+        <br>
+        <input type="button" value="收回选择的权限" v-on:click="recoveryAuthorityFromAccount()">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function() {
+                var _this = this
+                axios.get('/selectSysAccount').then(function (response) {
+                    _this.accounts = response.data
+                })
+            },
+            data: {
+                accounts: [],
+                authorities: [],
+                accountId: '0',
+                authorityIds: []
+            },
+            methods: {
+                recoveryAuthorityFromAccount: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('accountId', _this.accountId)
+                    params.append('authorityIds', _this.authorityIds)
+                    axios.post('/recoveryAuthorityFromAccount', params).then(function (response) {
+                        alert('权限回收成功')
+                        _this.selectAuthorityFromAccount()
+                    })
+                },
+                selectAuthorityFromAccount: function () {
+                    var _this = this
+                    axios.get('/selectAuthorityFromAccount', {params: {accountId: _this.accountId}}).then(function (response) {
+                        _this.authorities = response.data
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
