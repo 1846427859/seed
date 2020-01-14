@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.SysAccountDto;
 import com.example.demo.service.SysAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ public class SysAccountController {
     @Autowired
     private SysAccountService accountService;
 
+    @PreAuthorize("hasAnyRole('vip')")
     @ResponseBody
     @RequestMapping(value = "/insertSysAccount", method = RequestMethod.POST)
     public SysAccountDto insertSysAccount(SysAccountDto sysAccount) {
