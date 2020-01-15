@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import com.example.demo.dto.SysAccountDto;
+import com.example.demo.pojo.SysAccount;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -18,4 +19,5 @@ public interface SysAccountMapper {
 
     List<SysAccountDto> selectSysAccount();
 
+    SysAccount selectSysAccountByAccount(String username);
 }

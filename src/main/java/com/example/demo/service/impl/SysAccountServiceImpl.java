@@ -4,6 +4,7 @@ import com.example.demo.dto.SysAccountDto;
 import com.example.demo.mapper.SysAccountMapper;
 import com.example.demo.service.SysAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,9 @@ public class SysAccountServiceImpl implements SysAccountService {
     
     @Override
     public int insertSysAccount(SysAccountDto sysAccount) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String password = encoder.encode(sysAccount.getPassword());
+        sysAccount.setPassword(password);
         return accountMapper.insertSysAccount(sysAccount);
     }
 
@@ -28,6 +32,14 @@ public class SysAccountServiceImpl implements SysAccountService {
 
     @Override
     public int updateSysAccountById(SysAccountDto sysAccount) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        SysAccountDto accountDto = selectSysAccountById(sysAccount.getId());
+        String newPassword = sysAccount.getPassword();
+        String oldPassword1 = accountDto.getPassword();
+        if (!encoder.matches(newPassword, oldPassword1)) {
+            String password = encoder.encode(sysAccount.getPassword());
+            sysAccount.setPassword(password);
+        }
         return accountMapper.updateSysAccountById(sysAccount);
     }
 
