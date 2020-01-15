@@ -41,15 +41,22 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         SysAccount sysAccount = accountMapper.selectSysAccountByAccount(username);
-        String password = "";
+        if (sysAccount == null) {
+            return null;
+        }
+        int id = sysAccount.getId();
+        String password = sysAccount.getPassword();
         boolean enabled = false;
+        if(sysAccount.getState() == 1) {
+            enabled = true;
+        }
+        // 权限
         List<SysAuthorityDto> totalAuthorities = new ArrayList<>();
-        if (sysAccount != null) {
-            password = sysAccount.getPassword();
-            if(sysAccount.getState() == 1) {
-                enabled = true;
-            }
-            int id = sysAccount.getId();
+        if("root".equals(username)) {
+            // root 账号拥有所有的权限
+            List<SysAuthorityDto> authorityDtos = authorityMapper.selectSysAuthority();
+            totalAuthorities = authorityDtos;
+        } else {
             List<SysGroupDto> groupDtos = assignPrivilegeMapper.selectGroupFromAccount(id);
             List<SysRoleDto> roleDtos = assignPrivilegeMapper.selectRoleFromAccount(id);
             List<SysAuthorityDto> authorityDtos = assignPrivilegeMapper.selectAuthorityFromAccount(id);
@@ -70,17 +77,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             }
         }
         Set<SimpleGrantedAuthority> authorities = new HashSet<>();
-        // root 账号拥有所有的权限
-        if("root".equals(username)) {
-            List<SysAuthorityDto> authorityDtos = authorityMapper.selectSysAuthority();
-            totalAuthorities = authorityDtos;
-        }
         for (int i = 0; i < totalAuthorities.size(); i++) {
             SysAuthorityDto authorityDto = totalAuthorities.get(i);
             SimpleGrantedAuthority authority = new SimpleGrantedAuthority(authorityDto.getName());
             authorities.add(authority);
         }
-        UserDetailsImpl userDetails = new UserDetailsImpl(username, password, authorities, enabled);
+        UserDetailsImpl userDetails = new UserDetailsImpl(id, username, password, authorities, enabled);
         return userDetails;
     }
 }

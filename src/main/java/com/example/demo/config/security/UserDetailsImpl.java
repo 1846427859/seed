@@ -8,12 +8,14 @@ import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
 
+    private int id;
     private String username;
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
     private boolean enabled = false;
 
-    public UserDetailsImpl(String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled) {
+    public UserDetailsImpl(int id, String username, String password, Collection<? extends GrantedAuthority> authorities, boolean enabled) {
+        this.id = id;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
