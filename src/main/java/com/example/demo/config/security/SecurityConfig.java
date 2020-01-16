@@ -39,9 +39,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin()
-                .and().authorizeRequests().antMatchers("/**").authenticated()
-                .and().csrf().disable();
+        http
+                .formLogin()
+                .loginPage("/login.html")
+                .loginProcessingUrl("/login")
+                .and()
+                .authorizeRequests()
+                .antMatchers("/**/*.css").permitAll()
+                .antMatchers("/**/*.js").permitAll()
+                .antMatchers("/**/*.html").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
+                .antMatchers("/").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .csrf().disable();
         // 用户不能同时登陆，第二个无法登录
         http.sessionManagement().maximumSessions(1).expiredUrl("/login");
     }

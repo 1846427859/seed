@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>模板</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <input type="text" v-model="username">
+        <input type="text" v-model="password">
+        <input type="submit" value="login" v-on:click="login()">
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                username: 'root',
+                password: 'root'
+            },
+            methods: {
+                login: function () {
+                    var _this = this
+                    var params =  new FormData()
+                    params.append('username', _this.username)
+                    params.append('password', _this.password)
+                    axios.post('/login', params).then(function (response) {
+                        console.log(response)
+                    })
+                }
+            }
+        })
+    </script>
+</body>
+</html>
