@@ -50,7 +50,7 @@
                 axios.get('/selectSysAccount').then(function (response) {
                     _this.accounts = response.data
                 })
-                axios.get('/selectSysAuthority').then(function (response) {
+                axios.get('/selectCanAssignAuthority').then(function (response) {
                     _this.authorities = response.data
                 })
             },

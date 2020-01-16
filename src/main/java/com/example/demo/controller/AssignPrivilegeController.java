@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.config.security.UserDetailsImpl;
 import com.example.demo.dto.SysAuthorityDto;
 import com.example.demo.dto.SysGroupDto;
 import com.example.demo.dto.SysRoleDto;
@@ -7,6 +8,7 @@ import com.example.demo.service.AssignPrivilegeService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -175,6 +177,28 @@ public class AssignPrivilegeController {
     public List<SysGroupDto> selectGroupFromAccount(int accountId) {
         List<SysGroupDto> groupDtos = assignPrivilegeService.selectGroupFromAccount(accountId);
         return groupDtos;
+    }
+
+    @ApiOperation("查看当前账号可以授权的权限")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('selectCanAssignAuthority')")
+    @RequestMapping(value = "/selectCanAssignAuthority", method = RequestMethod.GET)
+    public List<SysAuthorityDto> selectCanAssignAuthority() {
+        UserDetailsImpl principal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int accountId = principal.getId();
+        List<SysAuthorityDto> authorityDtos = assignPrivilegeService.selectCanAssignAuthority(accountId);
+        return authorityDtos;
+    }
+
+    @ApiOperation("查看当前账号可以授权的权限")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('selectOwnerAuthority')")
+    @RequestMapping(value = "/selectOwnerAuthority", method = RequestMethod.GET)
+    public List<SysAuthorityDto> selectOwnerAuthority() {
+        UserDetailsImpl principal = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        int accountId = principal.getId();
+        List<SysAuthorityDto> authorityDtos = assignPrivilegeService.selectOwnerAuthority(accountId);
+        return authorityDtos;
     }
 
 }

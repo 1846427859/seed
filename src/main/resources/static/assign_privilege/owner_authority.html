@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-bind="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>当前用户的权限</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <div id="app">
+        <table border="1">
+            <tr>
+                <td>选择</td>
+                <td>权限名称</td>
+                <td>权限描述</td>
+                <td>可以授权给别人</td>
+            </tr>
+            <tr v-for="(authority,index) in authorities">
+                <td>{{index + 1}}</td>
+                <td>{{authority.name}}</td>
+                <td> {{authority.description}}</td>
+                <td> {{authority.type}}</td>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            created: function () {
+                var _this = this
+                axios.get('/selectOwnerAuthority').then(function (response) {
+                    _this.authorities = response.data
+                })
+            },
+            data: {
+                authorities: []
+            },
+            methods: {
+            }
+        })
+    </script>
+</body>
+</html>

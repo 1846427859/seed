@@ -4,9 +4,7 @@ import com.example.demo.mapper.AssignPrivilegeMapper;
 import com.example.demo.mapper.SysAccountMapper;
 import com.example.demo.mapper.SysAuthorityMapper;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,6 +39,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.formLogin().and().authorizeRequests().antMatchers("/**").authenticated().and().csrf().disable();
+        http.formLogin()
+                .and().authorizeRequests().antMatchers("/**").authenticated()
+                .and().csrf().disable();
+        // 用户不能同时登陆，第二个无法登录
+        http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
     }
 }

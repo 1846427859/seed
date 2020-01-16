@@ -48,7 +48,7 @@
                 axios.get('/selectSysGroup').then(function (response) {
                     _this.groups = response.data
                 })
-                axios.get('/selectSysAuthority').then(function (response) {
+                axios.get('/selectCanAssignAuthority').then(function (response) {
                     _this.authorities = response.data
                 })
             },

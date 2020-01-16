@@ -43,4 +43,8 @@ public interface AssignPrivilegeService {
     List<SysRoleDto> selectRoleFromGroup(int groupId);
 
     List<SysGroupDto> selectGroupFromAccount(int accountId);
+
+    List<SysAuthorityDto> selectCanAssignAuthority(int accountId);
+
+    List<SysAuthorityDto> selectOwnerAuthority(int accountId);
 }
