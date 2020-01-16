@@ -43,6 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and().authorizeRequests().antMatchers("/**").authenticated()
                 .and().csrf().disable();
         // 用户不能同时登陆，第二个无法登录
-        http.sessionManagement().maximumSessions(1).maxSessionsPreventsLogin(true);
+        http.sessionManagement().maximumSessions(1).expiredUrl("/login");
     }
+
 }
