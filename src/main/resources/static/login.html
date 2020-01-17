@@ -26,7 +26,8 @@
                     params.append('username', _this.username)
                     params.append('password', _this.password)
                     axios.post('/login', params).then(function (response) {
-                        console.log(response)
+                        localStorage.setItem('token', response.data)
+                        console.log(response.data)
                     })
                 }
             }

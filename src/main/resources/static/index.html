@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>首页</title>
@@ -7,32 +7,58 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-    首页
-    <a href="/logout">退出登录</a>
-    <ul>
-        <li><a href="account/account_select.html">账号管理</a></li>
-        <li><a href="authority/authority_select.html">权限管理</a></li>
-        <li><a href="role/role_select.html">角色管理</a></li>
-        <li><a href="group/group_select.html">权限组管理</a></li>
-        <li>
-            授权管理
-            <ul>
-                <li><a href="assign_privilege/assign_authority_to_account.html">给账号分配权限</a></li>
-                <li><a href="assign_privilege/recovery_authority_from_account.html">收回账号的权限</a></li>
-                <li><a href="assign_privilege/assign_authority_to_role.html">给角色分配权限</a></li>
-                <li><a href="assign_privilege/recovery_authority_from_role.html">收回角色的权限</a></li>
-                <li><a href="assign_privilege/assign_authority_to_group.html">给权限组分配权限</a></li>
-                <li><a href="assign_privilege/recovery_authority_from_group.html">收回权限组的权限</a></li>
-                <li><a href="assign_privilege/assign_role_to_account.html">给账号分配角色</a></li>
-                <li><a href="assign_privilege/recovery_role_from_account.html">收回账号的角色</a></li>
-                <li><a href="assign_privilege/assign_role_to_group.html">给权限组分配角色</a></li>
-                <li><a href="assign_privilege/recovery_role_from_group.html">收回权限组的角色</a></li>
-                <li><a href="assign_privilege/assign_group_to_account.html">给账号分配权限组</a></li>
-                <li><a href="assign_privilege/recovery_group_from_account.html">收回账号的权限组</a></li>
-                <li><a href="assign_privilege/owner_authority.html">当前用户的权限</a></li>
-            </ul>
-        </li>
-    </ul>
+    <div id="app">
+        首页
+        <a href="" v-on:click.stop.prevent="logout()">退出登录</a>
+        <ul>
+            <li><a href="account/account_select.html">账号管理</a></li>
+            <li><a href="authority/authority_select.html">权限管理</a></li>
+            <li><a href="role/role_select.html">角色管理</a></li>
+            <li><a href="group/group_select.html">权限组管理</a></li>
+            <li>
+                授权管理
+                <ul>
+                    <li><a href="assign_privilege/assign_authority_to_account.html">给账号分配权限</a></li>
+                    <li><a href="assign_privilege/recovery_authority_from_account.html">收回账号的权限</a></li>
+                    <li><a href="assign_privilege/assign_authority_to_role.html">给角色分配权限</a></li>
+                    <li><a href="assign_privilege/recovery_authority_from_role.html">收回角色的权限</a></li>
+                    <li><a href="assign_privilege/assign_authority_to_group.html">给权限组分配权限</a></li>
+                    <li><a href="assign_privilege/recovery_authority_from_group.html">收回权限组的权限</a></li>
+                    <li><a href="assign_privilege/assign_role_to_account.html">给账号分配角色</a></li>
+                    <li><a href="assign_privilege/recovery_role_from_account.html">收回账号的角色</a></li>
+                    <li><a href="assign_privilege/assign_role_to_group.html">给权限组分配角色</a></li>
+                    <li><a href="assign_privilege/recovery_role_from_group.html">收回权限组的角色</a></li>
+                    <li><a href="assign_privilege/assign_group_to_account.html">给账号分配权限组</a></li>
+                    <li><a href="assign_privilege/recovery_group_from_account.html">收回账号的权限组</a></li>
+                    <li><a href="assign_privilege/owner_authority.html">当前用户的权限</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <script>
+        axios.defaults.headers.common['X-Auth-Token'] = localStorage.getItem('token')
+        var app = new Vue({
+            el: '#app',
+            data: {
+                parentId: '0',
+                name: '',
+                description: '',
+                authorities: []
+            },
+            created: function() {
+                var _this = this
+                axios.get('/selectSysAuthority').then(function (response) {
+                    _this.authorities = response.data
+                })
+            },
+            methods: {
+                logout: function () {
+                    alert()
+                    axios.post('/logout')
+                }
+            }
+        })
+    </script>
 </body>
 </html>
 
